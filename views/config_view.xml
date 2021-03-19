@@ -22,6 +22,62 @@
             </field>
         </record>
 
+        <record id="laundry_outlet_form_view" model="ir.ui.view">
+            <field name="name">laundry.outlet.form</field>
+            <field name="model">laundry.outlet</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                    <div class="oe_title">      
+                        <h1 style="width: 350px;">
+                            <field name="name" placeholder="Outlet Name"/>                  
+                        </h1>
+                    </div>
+                        <group>
+                            <group>
+                                <!-- <field name="name" /> -->
+                                <field name="code"/>
+                                <field name="phone"/>
+                                <field name="email"/>
+                                <field name="pricelist" />
+                                <field name="sequence_id" readonly='1'/>
+                                <!-- <field name="phone"/> -->
+                            </group>
+                            <group>                                
+                                <label for="street" string="Address"/>
+                                <div>
+                                    <field name="street" placeholder="Street..."/>
+                                    <field name="street2" placeholder="Street2..."/>
+                                    <div class="address_format">
+                                            <field name="city" required='1' placeholder="City" style="width: 40%%"/>
+                                            <field name="state_id" class="oe_no_button" placeholder="State" style="width: 37%%" options='{"no_open": True}' on_change="onchange_state(state_id)"/>
+                                            <field name="zip" placeholder="ZIP" style="width: 20%%"/>
+                                    </div>
+                                    <field name="country_id" required='1' placeholder="Country" class="oe_no_button" options='{"no_open": True, "no_create": True}'/>
+                                </div>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="laundry_outlet_tree_view" model="ir.ui.view">
+            <field name="name">laundry.outlet.tree</field>
+            <field name="model">laundry.outlet</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="street"/>
+                    <field name="street2"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                </tree>
+            </field>
+        </record>
+
         <record id="washing_type_tree_view" model="ir.ui.view">
             <field name="name">washing.type.tree</field>
             <field name="model">washing.type</field>
@@ -79,12 +135,20 @@
             <field name="res_model">washing.work</field>
             <field name="view_mode">tree,form</field>
         </record>
+        
+        <record id="action_laundry_outlet" model="ir.actions.act_window">
+            <field name="name">Laundry Outlet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">laundry.outlet</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
         <menuitem id="laundry_config_menu" name="Configuration" parent="laundry_management_menu" sequence="3"/>
         <menuitem id="laundry_customer" name="Customers" parent="laundry_config_menu" action="base.action_partner_customer_form" sequence="1"/>
         <menuitem id="laundry_products" name="Products" parent="laundry_config_menu" action="product.product_normal_action_sell" sequence="2"/>
         <menuitem id="laundry_washing_type" name="Washing Type" parent="laundry_config_menu" action="action_washing_type" sequence="3"/>
         <menuitem id="laundry_washing_work" name="Additional Works" parent="laundry_config_menu" action="action_washing_work" sequence="4"/>
+        <menuitem id="laundry_outlets_menu" name="Outlets" parent="laundry_config_menu" action="action_laundry_outlet" sequence="4"/>
 
     </data>
 </odoo>
