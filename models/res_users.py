@@ -18,7 +18,7 @@ class LaundryResUsersInherit(models.Model):
                                                                        'user_id': result['id'],
                                                                        'address_home_id': result['partner_id'].id})
         return result
-class LaundryEmployees(models.Model):
-    _inherit = 'hr.employee'
+class LaundryEmployeesBase(models.AbstractModel):
+    _inherit = 'hr.employee.base'
 
     outlet = fields.Many2one('laundry.outlet', 'Outlet/Shop')
