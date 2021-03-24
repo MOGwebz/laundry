@@ -24,3 +24,4 @@ from . import laundry
 from . import outlets
 from . import res_users
 from . import account_move
+from . import res_config

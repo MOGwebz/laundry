@@ -91,6 +91,10 @@ class LaundryManagement(models.Model):
         tax = self.env['account.tax'].search([('type_tax_use', '=', 'sale')], limit=1)
         return tax.id
 
+    def _default_narration(self):
+        terms = self.env['ir.config_parameter'].sudo().get_param('invoice_terms') or False
+        return terms
+
     def create_invoice(self):
         if self.state == 'draft':
             raise UserError(_("Please confirm Order First before proceeding to Invoice"))
@@ -104,17 +108,17 @@ class LaundryManagement(models.Model):
                     'name': ln.product_id.name,
                     'quantity': ln.quantity/1,
                     'price_unit': ln.price_unit,
-                    'tax_ids':ln.tax_id,                 
-
+                    'tax_ids':ln.tax_id,
                 }))
 
             invoice = {
-                    'name': rec.name,
+                    'ref': rec.name,
                     'partner_id' : rec.partner_id.id,
                     'move_type': 'out_invoice',
                     'currency_id': rec.currency_id.id,
                     'laundry_id' : rec.id,
                     'journal_id' : self._default_journal(),
+                    'narration': rec.note,
                     # 'default_customs_bill':True,
                     'invoice_line_ids':product_lines,
                 }
