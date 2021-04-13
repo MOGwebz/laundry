@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sales_orders_addition">
+            <field name="name">Sales Orders Additions</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//group[@name='accounting_info_group']" position="after">
+                        <group>
+                            <field name="shoe_repair_op" />
+                        </group>
+                    </xpath>
+                </data>
+            </field>
+        </record> 
+
+    </data>
+</odoo>

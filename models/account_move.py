@@ -6,6 +6,8 @@ class LaundryAccountMove(models.Model):
     _inherit = 'account.move'
 
     laundry_id = fields.Many2one('laundry.order', string='Laundry Order',)
+    pickup_date = fields.Date('Pick Up Date')
+
 
     @api.model
     def create(self, vals):
