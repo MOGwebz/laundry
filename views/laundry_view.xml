@@ -28,7 +28,9 @@
                                 <button name='action_view_laundry_works' class="oe_stat_button" type="object" icon="fa-money" states="order,done,return,process">
                                     <field string="Works" name="work_count" widget="statinfo" />
                                 </button>
-                                <button name='action_view_invoice' class="oe_stat_button" type="object" icon="fa-money" states="order,done,return">
+                                <button class="oe_stat_button" name="%(account.action_move_out_invoice_type)d"
+                                context="{'search_default_partner_id': partner_id, 'default_partner_id': partner_id, 'default_move_type': 'out_invoice'}"
+                                type="action" icon="fa-money" states="order,done,return">
                                     <field string="Invoice" name="invoice_count" widget="statinfo" />
                                 </button>
                             </div>
