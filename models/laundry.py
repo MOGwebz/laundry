@@ -20,6 +20,8 @@
 #
 #############################################################################
 
+
+
 import time
 from datetime import datetime
 from odoo import models, fields, api, _
@@ -117,6 +119,7 @@ class LaundryManagement(models.Model):
                     'move_type': 'out_invoice',
                     'currency_id': rec.currency_id.id,
                     'laundry_id' : rec.id,
+                    'payment_reference' : rec.name,
                     'journal_id' : self._default_journal(),
                     'narration': rec.note,
                     # 'default_customs_bill':True,
