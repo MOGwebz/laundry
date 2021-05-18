@@ -107,7 +107,7 @@ class LaundryManagement(models.Model):
             for ln in rec.order_lines:
                 product_lines.append((0,0,{
                     'product_id': ln.product_id.id,
-                    'name': ln.product_id.name,
+                    'name': ln.description, #ln.product_id.name,
                     'quantity': ln.quantity/1,
                     'price_unit': ln.price_unit,
                     'tax_ids':ln.tax_id,
