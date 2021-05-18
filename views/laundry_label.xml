@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
 
         <template id="laundry_order_label">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="obj">
                         <t t-call="web.external_layout">
                             <div class="page">
-                                <div class="col-xs-4" style="padding:0;">
+                                <div class="col-xs-4" style="padding:0; font-weight:700; color:black; font-size:30px;">
+                                    <!--
                                     <table style="border: 2px solid black;border-spacing:0;margin-bottom:0;height:122px;" class="table">
                                         <tbody>
                                             <tr>
                                                 <th style="text-align: left; vertical-align: middle;" colspan="2">
-                                                    <span t-esc="obj.name"/>
+                                                    
                                                 </th>
                                                 <th style="text-align: right; vertical-align: middle;" colspan="2">
-                                                    <span t-esc="obj.order_date"/>
+                                                    
                                                 </th>
                                             </tr>
                                             <tr>
@@ -23,11 +23,32 @@
                                                     <span>CUSTOMER</span>
                                                 </td>
                                                 <td style="border: 2px solid black;text-align: center; vertical-align: middle;" colspan="2">
-                                                    <span t-esc="obj.partner_id.name"/>
+                                                    
                                                 </td>
                                             </tr>
                                         </tbody>
+                                    </table>  -->
+                                   
+                                    Invoice No: <t t-esc="obj.name"/><br/><br/>
+                                    Order Date: <t t-esc="obj.order_date"/><br/><br/>
+                                    Customer Name: <t t-esc="obj.partner_id.name"/><br/><br/>
+                                    <table style="border: 1px solid black;border-spacing:0;margin-bottom:0;height:80px;padding-top:5em;" class="table">
+                                        <tbody>
+                                            <tr style="padding:0; font-weight:700; color:black; font-size:30px;">
+                                                <th style="text-align: center; border: 2px solid black">Description</th>
+                                                <th style="text-align: center; border: 2px solid black">No of items</th>
+                                                <th style="text-align: center; border: 2px solid black">Unit Price</th>
+                                                <th style="text-align: center; border: 2px solid black">Total</th>
+                                            </tr>
+                                            <tr style="color:black; font-size:30px;">
+                                                <td style="text-align: center; border: 2px solid black;"><t t-esc="obj.order_lines.description"/></td>
+                                                <td style="text-align: center; border: 2px solid black;"><t t-esc="obj.order_lines.quantity"/></td>
+                                                <td style="text-align: center; border: 2px solid black;"><t t-esc="obj.order_lines.price_unit"/></td>
+                                                <td style="text-align: center; border: 2px solid black;"><t t-esc="obj.order_lines.amount"/></td>
+                                            </tr>
+                                        </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </t>
@@ -43,5 +64,4 @@
             name="laundry_management.laundry_order_label"
             file="laundry_management.laundry_order_label"/>
 
-    </data>
 </odoo>
