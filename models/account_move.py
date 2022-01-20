@@ -7,6 +7,7 @@ class LaundryAccountMove(models.Model):
 
     laundry_id = fields.Many2one('laundry.order', string='Laundry Order',)
     pickup_date = fields.Date('Pick Up Date')
+    outlet = fields.Many2one('laundry.outlet','Outlet')
 
 
     @api.model

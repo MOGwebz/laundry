@@ -28,6 +28,12 @@
             <field name="domain_force">[('laundry_person.id','=',user.id)]</field>
             <field name="groups" eval="[(4,ref('laundry_group_user'))]"/>
         </record>
+        <record id="laundry_order_user_outlet_rule" model="ir.rule">
+            <field name="name">user: own outlet only</field>
+            <field name="model_id" ref="model_laundry_order"/>
+             <field name="domain_force">[('outlet','=',user.employee_id.outlet.id)]</field>
+            <field name="groups" eval="[(4,ref('laundry_group_user'))]"/>
+        </record>
     </data>
 </odoo>
 

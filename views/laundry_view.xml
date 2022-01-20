@@ -98,6 +98,7 @@
                             <field name="partner_id"/>
                             <field name="order_date"/>
                             <field name="laundry_person"/>
+                            <field name="outlet"/>
                             <field name="total_amount"/>
                             <field name="state"/>
                         </tree>
