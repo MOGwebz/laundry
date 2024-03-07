@@ -24,8 +24,8 @@
                             <field name="state" widget="statusbar" statusbar_visible="draft,order,done,return"/>
                         </header>
                         <sheet>
-                            <div class="oe_button_box" name="buttons">
-                                <button name='action_view_laundry_works' class="oe_stat_button" type="object" icon="fa-money" states="order,done,return,process">
+                            <div class="oe_button_box" name="button_box">
+                                <button name='action_view_laundry_works' class="oe_stat_button" type="object" icon="fa-spinner" states="order,done,return,process">
                                     <field string="Works" name="work_count" widget="statinfo" />
                                 </button>
                                 <button class="oe_stat_button" name="%(account.action_move_out_invoice_type)d"
@@ -67,8 +67,8 @@
                                             <field name="product_id"/>
                                             <field name="description"/>
                                             <field name="quantity"/>
-                                            <!-- <field name="washing_type"/> -->
-                                            <!-- <field name="extra_work" widget="many2many_tags"/> -->
+                                             <field name="washing_type"/>
+                                             <field name="extra_work" widget="many2many_tags"/>
                                             <field name="price_unit"/>
                                             <field name="amount"/>
                                             <field name="state"/>
