@@ -52,7 +52,8 @@
                                     <field name="currency_id" invisible='1'/>
                                     <field name="laundry_person" attrs="{'readonly': [('state','in',('return', 'cancel'))]}"/>
                                     <field name="employee_id" readonly='1' force_save='1' invisible='0'/>
-                                    <field name="outlet" readonly='1' force_save='1' invisible='0'/>
+<!--                                    <field name="outlet" readonly='1' force_save='1' invisible='0'/>-->
+                                    <field name="outlet"/>
                                     <field name="pricelist" readonly='1' force_save='1' invisible='0'/>
                                     <field name="invoice_status" invisible="1"/>
                                     <field name="invoice_id" invisible="1"/>

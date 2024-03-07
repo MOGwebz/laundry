@@ -129,11 +129,11 @@ class LaundryManagement(models.Model):
             rec.write({
                 'invoice_id':inv_id.id
             })
-            wiz_form_id = self.env['ir.model.data'].get_object_reference(
-                'account', 'view_move_form')[1]
+            # page_directory_search = request.env['ir.model.data'].sudo()._xmlid_lookup('module.xml_id')
+            # wiz_form_id = self.env['ir.model.data']._xmlid_lookup('account', 'view_move_form')[1]
             return {
                 'view_type': 'form',
-                'view_id': wiz_form_id,
+                # 'view_id': wiz_form_id,
                 'view_mode': 'form',
                 'res_model': 'account.move',
                 'type': 'ir.actions.act_window',
@@ -172,7 +172,7 @@ class LaundryManagement(models.Model):
         work_ids = []
         for each in work_obj:
             work_ids.append(each.id)
-        view_id = self.env.ref('laundry_management.washing_form_view').id
+        view_id = self.env.ref('laundry.washing_form_view').id
         if work_ids:
             if len(work_ids) <= 1:
                 value = {
@@ -493,7 +493,7 @@ class LaundryManagementLine(models.Model):
                 )
                 tax_obj = self.env["account.tax"]
                 recalculated_price_unit = (
-                    product.price * self.product_id.uom_id.factor
+                    product.list_price * self.product_id.uom_id.factor
                 ) / (self.product_id.uom_id.factor or 1.0)
                 price_unit = tax_obj._fix_tax_included_price_company(
                     recalculated_price_unit,
@@ -645,7 +645,7 @@ class SaleOrderInherit(models.Model):
     wash_obj = fields.Many2one('washing.washing', string='Order Reference',
                                ondelete='cascade')
     name = fields.Text(string='Description', required=True)
-    uom_id = fields.Many2one('product.uom', 'Unit of Measure ', required=True)
+    uom_id = fields.Many2one('uom.uom', 'Unit of Measure ', required=True)
     quantity = fields.Integer(string='Quantity')
     product_id = fields.Many2one('product.product', string='Product')
     price_unit = fields.Float('Unit Price', default=0.0,

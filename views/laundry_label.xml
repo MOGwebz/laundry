@@ -61,7 +61,7 @@
             id="laundry_label"
             model="laundry.order"
             report_type="qweb-pdf"
-            name="laundry_management.laundry_order_label"
-            file="laundry_management.laundry_order_label"/>
+            name="laundry.laundry_order_label"
+            file="laundry.laundry_order_label"/>
 
 </odoo>
