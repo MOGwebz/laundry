@@ -1,24 +1,4 @@
 # -*- coding: utf-8 -*-
-#############################################################################
-#
-#    Cybrosys Technologies Pvt. Ltd.
-#
-#    Copyright (C) 2019-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
-#    Author: Jesni Banu and Nilmar Shereef(odoo@cybrosys.com)
-#
-#    You can modify it under the terms of the GNU AFFERO
-#    GENERAL PUBLIC LICENSE (AGPL v3), Version 3.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU AFFERO GENERAL PUBLIC LICENSE (AGPL v3) for more details.
-#
-#    You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
-#    (AGPL v3) along with this program.
-#    If not, see <http://www.gnu.org/licenses/>.
-#
-#############################################################################
 
 
 
@@ -370,9 +350,10 @@ class LaundryManagement(models.Model):
 class LaundryManagementLine(models.Model):
     _name = 'laundry.order.line'
     
-    @api.depends('product_id', 'extra_work', 'quantity')
+    @api.depends('product_id', 'extra_work', 'quantity',"express")
     def get_amount(self):
         for obj in self:
+            obj._onchange_product_id_pricelist()
             total = obj.price_unit * obj.quantity
             for each in obj.extra_work:
                 total += each.amount * obj.quantity
@@ -387,6 +368,7 @@ class LaundryManagementLine(models.Model):
     description = fields.Text(string='Description')
     washing_type = fields.Many2one('washing.type', string='Washing Type',)
     extra_work = fields.Many2many('washing.work', string='Extra Work')
+    express = fields.Boolean("Express ")
     price_unit = fields.Float(string='Unit Price',)
     amount = fields.Float(compute='get_amount', string='Total')
     laundry_obj = fields.Many2one('laundry.order', invisible=1)
@@ -408,10 +390,10 @@ class LaundryManagementLine(models.Model):
 
     
 
-    @api.onchange("product_id", "quantity")
+    @api.onchange("product_id", "quantity","express")
     def _onchange_product_id_pricelist(self):
         for sel in self:
-            sel.price_unit = sel.product_id.lst_price
+            sel.price_unit = sel.product_id.lst_price * 2 if self.express else sel.product_id.lst_price
             if not sel.laundry_obj.pricelist:
                 return
             sel.with_context(check_move_validity=False).update(

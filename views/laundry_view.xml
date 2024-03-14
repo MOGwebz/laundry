@@ -67,8 +67,9 @@
                                             <field name="product_id"/>
                                             <field name="description"/>
                                             <field name="quantity"/>
-                                             <field name="washing_type"/>
-                                             <field name="extra_work" widget="many2many_tags"/>
+                                            <field name="washing_type"/>
+                                            <field name="express"/>
+                                            <field name="extra_work" widget="many2many_tags"/>
                                             <field name="price_unit"/>
                                             <field name="amount"/>
                                             <field name="state"/>
