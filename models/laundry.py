@@ -390,14 +390,14 @@ class LaundryManagementLine(models.Model):
 
     
 
-    @api.onchange("product_id", "quantity","express")
+    @api.onchange("product_id", "quantity","express",)
     def _onchange_product_id_pricelist(self):
         for sel in self:
             sel.price_unit = sel.product_id.lst_price * 2 if self.express else sel.product_id.lst_price
             if not sel.laundry_obj.pricelist:
                 return
             sel.with_context(check_move_validity=False).update(
-                {"price_unit": sel._get_price_with_pricelist()}
+                {"price_unit": sel._get_price_with_pricelist() * 2 if self.express else sel._get_price_with_pricelist() }
             )
     def _get_real_price_currency(self, product, rule_id, qty, uom, pricelist_id):
         PricelistItem = self.env["product.pricelist.item"]
