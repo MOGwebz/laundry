@@ -42,6 +42,7 @@
                             <group>
                                 <group>
                                     <field name="partner_id"/>
+                                    <field name="customer_phone" required="1"/>
                                     <field name="partner_invoice_id" context="{'default_type':'invoice'}"
                                            attrs="{'readonly': [('state','in',('done','return','cancel'))]}"/>
                                     <field name="partner_shipping_id" context="{'default_type':'delivery'}"

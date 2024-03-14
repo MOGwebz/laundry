@@ -235,6 +235,7 @@ class LaundryManagement(models.Model):
     invoice_count = fields.Integer(compute='_invoice_count',
                                    string='# Invoice')
     work_count = fields.Integer(compute='_work_count', string='# Works')
+    customer_phone = fields.Char("Customer Phone")
     partner_id = fields.Many2one('res.partner', string='Customer',
                                  readonly=True,
                                  states={'draft': [('readonly', False)],
@@ -297,6 +298,16 @@ class LaundryManagement(models.Model):
         for rec in self:
             rec.partner_invoice_id = rec.partner_id.id
             rec.partner_shipping_id = rec.partner_id.id
+            rec.customer_phone = rec.partner_id.phone or rec.partner_id.mobile
+    @api.onchange("customer_phone")
+    def _onchange_customer_phone(self,):
+        for rec in self:
+            if rec.customer_phone:
+                if rec.partner_id:
+                    if not rec.partner_id.phone :
+                        rec.partner_id.phone = rec.customer_phone
+                    if not rec.partner_id.mobile:
+                        rec.partner_id.mobile = rec.customer_phone
 
     def confirm_order(self):
         """
@@ -356,7 +367,7 @@ class LaundryManagementLine(models.Model):
             obj._onchange_product_id_pricelist()
             total = obj.price_unit * obj.quantity
             for each in obj.extra_work:
-                total += each.amount * obj.quantity
+                total += each.amount * obj.quantity * 2 if obj.express else each.amount * obj.quantity
             obj.amount = total
             
     def _default_tax(self):
@@ -535,6 +546,7 @@ class ExtraWork(models.Model):
     assigned_person = fields.Many2one('res.users', string='Assigned Person',
                                       required=1)
     amount = fields.Float(string='Service Charge', required=1)
+    
 
 
 class Washing(models.Model):
@@ -743,3 +755,22 @@ class LaundryManagementInvoice(models.TransientModel):
                                        subtype_id=self.env.ref(
                                            'mail.mt_note').id)
         return invoice
+
+class SaleOrder(models.Model):
+    _inherit ="sale.order"
+    
+    customer_phone = fields.Char("Customer Phone")
+    @api.onchange("customer_phone")
+    def _onchange_customer_phone(self,):
+        for rec in self:
+            if rec.customer_phone:
+                if rec.partner_id:
+                    if not rec.partner_id.phone :
+                        rec.partner_id.phone = rec.customer_phone
+                    if not rec.partner_id.mobile:
+                        rec.partner_id.mobile = rec.customer_phone
+    
+    @api.onchange('partner_id')
+    def _change_partner_laundry(self):
+        for rec in self:
+            rec.customer_phone = rec.partner_id.phone or rec.partner_id.mobile
